@@ -1,65 +1,59 @@
 <html>
     <header>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <link rel="stylesheet" href="./styles.css">
+        <link rel="stylesheet" href="../static/styles.css">
     </header>
     <body>
         <div class="card">
             <div class="card-body">
                 <h1>Creador de Equipos</h1>
-            <table class="table">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Ataque</th>
-                    <th>Defensa</th>
-                    <th>Stamina</th>
-                    <th>Técnica</th>
-                </tr>
-                <tr>
-                    <td>
-                        <div>            
-                            <input id="nombre" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <input id="ataque" type="number">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <input id="defensa" type="number">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <input id="stamina" type="number">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <input id="tecnica" type="number">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        <button id="nuevo-jugador" type="button" class="btn btn-primary">Ingresar jugador</button>
-    </div>
-    <table id="tabla-jugadores-ingresados" class="table">
-        <tr>
-            <th>Nombre</th>
-            <th>Ataque</th>
-            <th>Defensa</th>
-            <th>Stamina</th>
-            <th>Tecnica</th>
-        </tr>
-    </table>
-</div>
-</body>
-<script
-src="https://code.jquery.com/jquery-3.5.1.js"
-integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-crossorigin="anonymous">
-</script>
-<script src="../static/script.js"></script>
+                <table id="tabla-jugadores-ingresados" class="table">
+                    <thead>
+                        <tr>
+                            <th>+</th>
+                            <th>Nombre</th>
+                            <th>Ataque</th>
+                            <th>Defensa</th>
+                            <th>Stamina</th>
+                            <th>Técnica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <button id="nuevo-jugador" type="button" class="btn btn-primary">Ingresar jugador</button>
+                            </td>
+                            <td>
+                                <div>            
+                                    <input id="nombre" type="text">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input id="ataque" type="number">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input id="defensa" type="number">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input id="stamina" type="number">
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <input id="tecnica" type="number">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="../static/script.js"></script>
 </html>

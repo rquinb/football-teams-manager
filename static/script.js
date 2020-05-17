@@ -4,7 +4,8 @@ $("#nuevo-jugador").on("click",function(){
     let defensa = $("#defensa").val();
     let stamina = $("#stamina").val();
     let tecnica = $("#tecnica").val();
-    $("#tabla-jugadores-ingresados").append(`<tr>
+    $("#tabla-jugadores-ingresados > tbody").prepend(`<tr>
+    <td></td>
     <td>${nombre}</td>
     <td>${ataque}</td>
     <td>${defensa}</td>
