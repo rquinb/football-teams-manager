@@ -33,7 +33,13 @@ def teams_creator_page():
     return flask.render_template("teams_creator.html")
 
 
-@app.route("/player/", methods=['POST'])
+@app.route("/skills/", methods=['GET'])
+def get_all_skills():
+    skills = skills_repository.get_all_skills()
+    return flask.jsonify({"data": skills})
+
+
+@app.route("/players/", methods=['POST'])
 def add_player():
     body = flask.request.get_json()
     player_name = body['name']
@@ -45,6 +51,21 @@ def add_player():
     for skill in body["skills"]:
         players_repository.add_skill(player['player_id'],skill['id'], skill['strength'])
     return {}, http.HTTPStatus.CREATED
+
+
+@app.route("/players/", methods=["GET"])
+def get_all_players():
+    players = players_repository.get_players()
+    return flask.jsonify({"data":players})
+
+
+@app.route("/players/<int:player_id>/")
+def get_player(player_id):
+    player = players_repository.get_player_by_id(player_id)
+    if player is not None:
+        return flask.jsonify({"data": player})
+    else:
+        raise http.HTTPStatus.NOT_FOUND
 
 
 if __name__ == '__main__':
