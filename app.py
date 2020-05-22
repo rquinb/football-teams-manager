@@ -2,24 +2,16 @@ import os
 import http
 import logging
 import flask
-import psycopg2.extensions
-import psycopg2.extras
 import entities
+import sqlite3
 
-# DB credentials
-DB_USER = os.getenv('DB_USER', 'postgres')
-DB_PASS = os.getenv('DB_PASS', 'admin')
-DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = os.getenv('DB_PORT', str(5432))
-DB_SCHEMA = os.getenv('DB_SCHEMA', 'football-teams')
-db = psycopg2.connect(user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT,database=DB_SCHEMA,
-                      cursor_factory=psycopg2.extras.DictCursor)
-psycopg2.extensions.register_adapter(dict, psycopg2.extras.Json)
-db.autocommit = True
-
+db = sqlite3.connect(os.path.join(os.getcwd(), "db.sqlite3"),check_same_thread=False)
+db.row_factory = sqlite3.Row
+with open('sql/1 - schema.sql', 'r') as sql_file:
+    sql_script = sql_file.read()
+    db.executescript(sql_script)
 app = flask.Flask(__name__, template_folder="./templates", static_folder="./static")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-
 players_repository = entities.PlayersRepository(db)
 skills_repository = entities.SkillsRepository(db)
 
