@@ -8,8 +8,6 @@ Everything needed for managing football matches
 
 ## How to run it
 
-In order to run it you will need docker installed
-
 1. `cd` into project repo
 1. Activate virtual environment
 1. `pip install -r requirements.txt`
