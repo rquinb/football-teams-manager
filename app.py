@@ -16,7 +16,11 @@ skills_repository = entities.SkillsRepository(db)
 
 @app.route("/")
 def main_page():
-    return flask.render_template("index.html")
+    return flask.render_template("homepage.html")
+
+@app.route("/administrador-de-jugadores")
+def players_page():
+    return flask.render_template("players.html")
 
 
 @app.route("/creador-de-equipos/")
