@@ -5,13 +5,12 @@ import flask
 import entities
 import sqlite3
 
-db = sqlite3.connect(os.path.join(os.getcwd(), "db.sqlite3"),check_same_thread=False)
+db = sqlite3.connect(os.path.join(os.getcwd(), "db.sqlite3"),check_same_thread=False,isolation_level=None)
 db.row_factory = sqlite3.Row
-with open('sql/1 - schema.sql', 'r') as sql_file:
-    sql_script = sql_file.read()
-    db.executescript(sql_script)
 app = flask.Flask(__name__, template_folder="./templates", static_folder="./static")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+base_repository = entities.BaseRepository(db)
+base_repository.initialize_db()
 players_repository = entities.PlayersRepository(db)
 skills_repository = entities.SkillsRepository(db)
 

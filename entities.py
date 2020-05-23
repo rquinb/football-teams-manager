@@ -1,9 +1,22 @@
+import os
 from contextlib import closing
 
 
-class SkillsRepository:
-    def __init__(self, db):
+class BaseRepository:
+    def __init__(self,db):
         self._db = db
+
+    def initialize_db(self):
+        files = os.listdir('sql')
+        for file in files:
+            with open(os.path.join(os.getcwd(), "sql", file), 'r') as sql_file:
+                sql_script = sql_file.read()
+                self._db.executescript(sql_script)
+
+
+class SkillsRepository(BaseRepository):
+    def __init__(self, db):
+        super().__init__(db)
 
     def get_all_skills(self):
         with closing(self._db.cursor()) as cursor:
@@ -33,9 +46,9 @@ class SkillsRepository:
             """, [new_name, skill_id])
 
 
-class PlayersRepository:
+class PlayersRepository(BaseRepository):
     def __init__(self, db):
-        self._db = db
+        super().__init__(db)
 
     def get_player_by_name(self, name):
         with closing(self._db.cursor()) as cursor:
