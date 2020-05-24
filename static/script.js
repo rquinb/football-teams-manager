@@ -26,10 +26,10 @@ $("#nuevo-jugador").on("click",function(){
         </div>
        </div>
        <div class="card-body">
-        <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 4 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="4">${ataque}</div></div>
-        <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 4 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="4">${defensa}</div></div>
-        <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 4 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="4">${stamina}</div></div>
-        <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 4 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="4">${tecnica}</div></div>
+        <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 5 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="5">${ataque}</div></div>
+        <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 5 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="5">${defensa}</div></div>
+        <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 5 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="5">${stamina}</div></div>
+        <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 5 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="5">${tecnica}</div></div>
       </div>
     </div>
     `);
@@ -79,10 +79,10 @@ $.get( `${baseUrl}/players/`, function( data ) {
             </div>
            </div>
            <div class="card-body">
-            <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 4 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="4">${ataque}</div></div>
-            <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 4 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="4">${defensa}</div></div>
-            <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 4 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="4">${stamina}</div></div>
-            <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 4 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="4">${tecnica}</div></div>
+            <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 5 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="5">${ataque}</div></div>
+            <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 5 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="5">${defensa}</div></div>
+            <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 5 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="5">${stamina}</div></div>
+            <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 5 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="5">${tecnica}</div></div>
           </div>
         </div>
         `);
