@@ -5,3 +5,59 @@
 .table{
     font-size: large;
 }
+
+.player-card{
+    width: 80%;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+.average-skill-player{
+    font-weight: bold;
+    padding: 0;
+}
+.average-skill-card{
+    text-align: center;
+    width: 50%;
+    display: inline-block;
+}
+.average-skill-info{
+    text-align: center;
+    padding: 0;
+}
+.average-skill-title{
+    text-align: center;
+    padding: 0;
+}
+.card-header{
+    text-align: center;
+}
+.player-name-card{
+    font-weight: bold;
+    font-size: 30px;
+}
+.nav-pills .nav-link.active{
+    background-color: #28a745 !important;
+}
+.btn-circle.btn-xl {
+    width: 140px;
+    height: 140px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+    background-color: #28a745 !important;
+}
+.add-new-player{
+    text-align: center;
+}
+.button-add-new-player{
+    font-size: 30px;
+    font-weight: bold;
+}
+.players-data-input{
+    width: 100%;
+}
+

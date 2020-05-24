@@ -8,7 +8,7 @@
             <h1>Creador de Equipos</h1>
             <div class="row">
                 <div class="col-md-2">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <div class="nav flex-column nav-pills players-admin-options" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="v-pills-create-players-tab" data-toggle="pill" href="#v-pills-create-players" role="tab" aria-controls="v-pills-create-players" aria-selected="true">Crear Jugador</a>
                         <a class="nav-link" id="v-pills-display-players-tab" data-toggle="pill" href="#v-pills-display-players" role="tab" aria-controls="v-pills-display-players" aria-selected="false">Ver jugadores</a>
                     </div>
@@ -16,53 +16,54 @@
                 <div class="col-md-10">                        
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-create-players" role="tabpanel" aria-labelledby="v-pills-create-players-tab">
-                            Incoming feature...
+                            <div class="wrapper" id="players-container">
+                                <div class="card add-new-player justify-content-center">
+                                    <button type="button" class="mx-auto btn btn-default btn-circle btn-xl button-add-new-player" data-toggle="modal" data-target="#create-player-form">+</button>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Modal formulario "Crear Jugador" -->
+                        <div class="modal fade" id="create-player-form" tabindex="-1" role="dialog" aria-labelledby="create-player-form-label" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="create-player-form-label">Crear jugador</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>            
+                                            <input id="nombre" class="players-data-input" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ataque">Ataque</label>   
+                                            <input id="ataque" type="number" class="players-data-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="defensa">Defensa</label>   
+                                            <input id="defensa" type="number" class="players-data-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="stamina">Stamina</label>   
+                                            <input id="stamina" type="number" class="players-data-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tecnica">Tecnica</label>   
+                                            <input id="tecnica" type="number" class="players-data-input">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                  <button type="button" class="btn btn-success" id="nuevo-jugador">Crear jugador</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         <div class="tab-pane fade" id="v-pills-display-players" role="tabpanel" aria-labelledby="v-pills-display-players-tab">
-                            <table id="tabla-jugadores-ingresados" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>+</th>
-                                        <th>Nombre</th>
-                                        <th>Ataque</th>
-                                        <th>Defensa</th>
-                                        <th>Stamina</th>
-                                        <th>Técnica</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <button id="nuevo-jugador" type="button" class="btn btn-primary">+</button>
-                                        </td>
-                                        <td>
-                                            <div>            
-                                                <input id="nombre" type="text">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input id="ataque" type="number">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input id="defensa" type="number">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input id="stamina" type="number">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <input id="tecnica" type="number">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
