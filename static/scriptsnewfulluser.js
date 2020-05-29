@@ -3,14 +3,22 @@ function validar(){
     let contraseña= document.getElementById("contraseña").value;
     let correo= document.getElementById("correo").value;
 
+    let expresion= /\w+@\w+\.+[a-z]/;
+
     if (nuevoUsuario===""){
         alert("El nombre de usuario está vacío");
+        return false
+    } else if (nuevoUsuario.length<5 && nuevoUsuario.length>15){
+        alert("El nombre de usuario debe tener entre 5 y 15 caracteres")
         return false
     } else if (contraseña===""){
         alert("La contraseña está vacía");
         return false
     } else if (correo===""){
         alert("Debe introducir un correo electrónico");
+        return false
+    } else if (!expresion.test(correo)){
+        alert("Correo incorrecto");
         return false
     }
 }
@@ -33,5 +41,7 @@ let datosusu=localStorage.getItem("datosusuarios");
         }
         datosusu["datos"].push({"nuevoUsuario": nuevoUsuario, "contraseña": contraseña, "correo": correo});
         localStorage.setItem("datosusuarios", JSON.stringify(datosusu));
+        alert("Nuevo usuario ingresado");
+        window.location.href="https://www.youtube.com/watch?v=DExBeFCx3mQ"
     }
 }
