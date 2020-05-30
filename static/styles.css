@@ -2,9 +2,6 @@
     margin-right: 10px;
     color: #b30000
 };
-.table{
-    font-size: large;
-}
 
 .player-card{
     width: 80%;
@@ -29,20 +26,11 @@
 .nav-pills .nav-link.active{
     background-color: #28a745 !important;
 }
-.btn-circle.btn-xl {
-    width: 140px;
-    height: 140px;
-    padding: 10px 16px;
-    border-radius: 35px;
-    font-size: 24px;
-    line-height: 1.33;
-    background-color: #28a745 !important;
-}
+
 .add-new-player{
     text-align: center;
 }
 .button-add-new-player{
-    font-size: 30px;
     font-weight: bold;
 }
 .players-data-input{
