@@ -54,20 +54,19 @@ $.get( `${baseUrl}/players/`, function( data ) {
               <div class="card-header bg-success player-name-card">
               ${nombre}
               </div>
-              <div class="card-body average-skill-title">
-              <h3>Promedio</h3>
+              <div class="row-fluid">
+                <div class="text-center card">
+                  <span class="average-skill">${promedio}</span>
+                </div>
               </div>
-              <div class="card-body average-skill-info">
-              <div class="card-body bg-success average-skill-card">
-                <h1 class="average-skill-player">${promedio}</h1>
+              <div class="row-fluid">
+                <div class="card-body">
+                  <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 5 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="5">${ataque}</div></div>
+                  <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 5 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="5">${defensa}</div></div>
+                  <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 5 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="5">${stamina}</div></div>
+                  <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 5 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="5">${tecnica}</div></div>
+                </div>
               </div>
-              </div>
-              <div class="card-body">
-              <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 5 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="5">${ataque}</div></div>
-              <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 5 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="5">${defensa}</div></div>
-              <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 5 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="5">${stamina}</div></div>
-              <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 5 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="5">${tecnica}</div></div>
-            </div>
-          </div>`
+            </div>`
   };
 
