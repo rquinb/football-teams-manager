@@ -7,10 +7,10 @@ $.get( `${baseUrl}/skills/`, function( data ) {
 
 $("#nuevo-jugador").on("click",function(){
     var nombre = $("#nombre").val();
-    var ataque = parseInt($("#ataque").val());
-    var defensa = parseInt($("#defensa").val());
-    var stamina = parseInt($("#stamina").val());
-    var tecnica = parseInt($("#tecnica").val());
+    var ataque = parseInt($("#ataque").slider("value"));
+    var defensa = parseInt($("#defensa").slider("value"));
+    var stamina = parseInt($("#stamina").slider("value"));
+    var tecnica = parseInt($("#tecnica").slider("value"));
     $("#players-container").append(createPlayerCard(nombre,ataque,defensa,stamina,tecnica));
     // Save to DB
     $.ajax({
@@ -21,6 +21,20 @@ $("#nuevo-jugador").on("click",function(){
         contentType: "application/json; charset=utf-8"
       });
 });
+
+$(".players-data-numeric-input").slider({
+  min: 1,
+  max: 5,
+  create: function( event, ui ) {
+    $(this).find(".ui-slider-handle").text($(this).slider("value"));
+  },
+  slide: function( event, ui ) {
+    $(this).find(".ui-slider-handle").text( ui.value );
+  }
+});
+
+$( ".form-control-range" ).slider();
+
 
 $.get( `${baseUrl}/players/`, function( data ) {
     let players_data = data.data;

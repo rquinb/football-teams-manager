@@ -37,3 +37,11 @@
     width: 100%;
 }
 
+.ui-slider .ui-slider-handle {
+    color: #28a745;
+    font-size: larger;
+    padding: 0;
+    text-align: center;
+    text-decoration:none;
+} 
+
