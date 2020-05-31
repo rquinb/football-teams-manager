@@ -19,7 +19,7 @@ def main_page():
     return flask.render_template("homepage.html")
 
 @app.route("/registro-de-jugadores")
-def main_page():
+def register_page():
     return flask.render_template("newfulluser.html")
 
 @app.route("/administrador-de-jugadores")
