@@ -18,6 +18,10 @@ skills_repository = entities.SkillsRepository(db)
 def main_page():
     return flask.render_template("homepage.html")
 
+@app.route("/registro-de-jugadores")
+def main_page():
+    return flask.render_template("newfulluser.html")
+
 @app.route("/administrador-de-jugadores")
 def players_page():
     return flask.render_template("players.html")
