@@ -37,6 +37,7 @@ input {
 }
 
 button {
+    margin-left: 18cm;
     text-align: center;
     -webkit-text-stroke: 0.10px black;
     background-color: rgb(143, 158, 113);
