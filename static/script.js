@@ -1,22 +1,46 @@
 let baseUrl = "http://localhost:5000";
-
 $.get( `${baseUrl}/skills/`, function( data ) {
     let skills = data.data;
-    localStorage.setItem('skills',JSON.stringify(skills));
+    localStorage.setItem('skills',JSON.stringify({"data": skills}));
 });
+const skillsNames = getAvailableSkillsNames();
+
+function getSkillId(name){
+  var skills = JSON.parse(localStorage.getItem("skills"))['data'];
+  for(let skill of skills){
+    if(skill['name'] == name){
+      return skill['skill_id']
+    }
+  }
+  return null
+}
+
+function getAvailableSkillsNames(){
+  return JSON.parse(localStorage.getItem("skills"))['data'].map((value) => value['name']);
+}
+
+function getSkillValuesInForm(){
+  skillsObject = {}
+  for(let skillName of skillsNames){
+    skillsObject[skillName] = parseInt($(`#${skillName}`).slider("value"));
+  }
+  return skillsObject
+}
 
 $("#nuevo-jugador").on("click",function(){
     var nombre = $("#nombre").val();
-    var ataque = parseInt($("#ataque").slider("value"));
-    var defensa = parseInt($("#defensa").slider("value"));
-    var stamina = parseInt($("#stamina").slider("value"));
-    var tecnica = parseInt($("#tecnica").slider("value"));
-    $("#players-container").append(createPlayerCard(nombre,ataque,defensa,stamina,tecnica));
+    var skillsObject = getSkillValuesInForm();
+    var skills = [];
+    for(let skill in skillsObject){
+      let skillObject = {'id':getSkillId(skill),'strength':skillsObject[skill]}
+      skills.push(skillObject);
+    }
+    $("#players-container").append(createPlayerCard(nombre ,skillsObject));
     // Save to DB
     $.ajax({
         type: "POST",
         url: `${baseUrl}/players/`,
-        data: JSON.stringify({"name":nombre, "skills":[{"id":1,"strength":ataque},{"id":2,"strength":defensa},{"id":3,"strength":stamina},{"id":4,"strength":tecnica}]}),
+        data: JSON.stringify({"name":nombre, "skills":skills}),
         success: alert("Jugador creado con exito!"),
         contentType: "application/json; charset=utf-8"
       });
@@ -24,7 +48,7 @@ $("#nuevo-jugador").on("click",function(){
 
 $(".players-data-numeric-input").slider({
   min: 1,
-  max: 5,
+  max: 10,
   create: function( event, ui ) {
     $(this).find(".ui-slider-handle").text($(this).slider("value"));
   },
@@ -38,32 +62,27 @@ $( ".form-control-range" ).slider();
 
 $.get( `${baseUrl}/players/`, function( data ) {
     let players_data = data.data;
-    let nombre, ataque, defensa, stamina, tecnica;
+    let nombre;
     for(let i=0; i < players_data.length; i++){
         nombre = players_data[i]['name'];
+        let skillsObject = {};
         for(let j=0; j < players_data[i]['skills'].length; j ++){
             let skill = players_data[i]['skills'][j];
-            switch(skill['name']) {
-                case "ataque":
-                  ataque = skill['strength'];
-                  break;
-                case "defensa":
-                  defensa = skill['strength'];
-                  break;
-                case "stamina":
-                  stamina = skill['strength'];
-                case "tecnica":
-                  tecnica = skill['strength'];
-              }
-
+            skillsObject[skill['name']] = skill['strength'];
         }     
-
-        $("#players-container").append(createPlayerCard(nombre,ataque,defensa,stamina,tecnica));
+        $("#players-container").append(createPlayerCard(nombre, skillsObject));
     }
   });
 
-  function createPlayerCard(nombre,ataque,defensa,stamina,tecnica){
-    let promedio = ((ataque + defensa + stamina + tecnica) / 4).toFixed(1);
+  function createPlayerCard(nombre, skillsObject){
+    let amount_of_skills = Object.keys(skillsObject).length;
+    let total_skills = 0
+    let skills_html = ""
+    for(let skill in skillsObject){
+      total_skills += skillsObject[skill];
+      skills_html += `<label style="text-transform:capitalize;">${skill}: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${skillsObject[skill] / 10 * 100}%" aria-valuenow="${skillsObject[skill]}" aria-valuemin="0" aria-valuemax="10">${skillsObject[skill]}</div></div>`
+    }
+    let promedio = (total_skills / amount_of_skills).toFixed(1);
     return `<div class="card player-card">
               <div class="card-header bg-success player-name-card">
               ${nombre}
@@ -75,10 +94,7 @@ $.get( `${baseUrl}/players/`, function( data ) {
               </div>
               <div class="row-fluid">
                 <div class="card-body">
-                  <label>Ataque: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${ataque / 5 * 100}%" aria-valuenow="${ataque}" aria-valuemin="0" aria-valuemax="5">${ataque}</div></div>
-                  <label>Defensa: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${defensa / 5 * 100}%" aria-valuenow="${defensa}" aria-valuemin="0" aria-valuemax="5">${defensa}</div></div>
-                  <label>Stamina: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${stamina / 5 * 100}%" aria-valuenow="${stamina}" aria-valuemin="0" aria-valuemax="5">${stamina}</div></div>
-                  <label>Tecnica: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${tecnica / 5 * 100}%" aria-valuenow="${tecnica}" aria-valuemin="0" aria-valuemax="5">${tecnica}</div></div>
+                  ${skills_html}
                 </div>
               </div>
             </div>`
