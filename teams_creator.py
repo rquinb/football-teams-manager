@@ -88,3 +88,34 @@ class MatchCreator:
         clustered_players = KMeans(n_clusters=self.player_types).fit(only_skills)
         players_table['cluster'] = clustered_players.labels_
         return players_table
+
+
+class MatchCreatorReport:
+    def __init__(self, match):
+        self.match = match
+        self.skill_name_list = self.match.team_a.players_skills.columns
+
+    def _skill_list_to_dictionary(self, skill_list):
+        final_skill_list = []
+        for i, skill in enumerate(skill_list):
+            final_skill_list.append({'name': self.skill_name_list[i],
+                                     'value': skill})
+        return final_skill_list
+
+    def create_report(self):
+        return {
+            'teams': {
+                'team_1': {'players': self.match.team_a.players.tolist(),
+                           'skills': self._skill_list_to_dictionary(self.match.team_a.average_per_skill.tolist()),
+                           'average_skill': self.match.team_a.average_skill},
+                'team_2': {'players': self.match.team_b.players.tolist(),
+                           'skills': self._skill_list_to_dictionary(self.match.team_b.average_per_skill.tolist()),
+                           'average_skill': self.match.team_b.average_skill}
+            },
+            'skill_differences': {
+                'average_difference': self.match.mean_absolute_difference,
+                'difference_per_skill': self._skill_list_to_dictionary(self.match.absolute_skill_differences_vector.tolist())
+            }
+        }
+
+

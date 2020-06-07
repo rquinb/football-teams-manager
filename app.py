@@ -78,19 +78,8 @@ def get_match():
     else:
         match_creator = teams_creator.MatchCreator(players)
     match = match_creator.create_balanced_match(iterations=1000)
-    body = {
-        'teams': {
-            'team_1': {'players': match.team_a.players.tolist(),
-                       'skills': match.team_a.average_per_skill.tolist(),
-                       'average_skill': match.team_a.average_skill},
-            'team_2': {'players': match.team_b.players.tolist(),
-                       'skills': match.team_b.average_per_skill.tolist(),
-                       'average_skill': match.team_b.average_skill}},
-        'skill_differences': {
-            'average_difference': match.mean_absolute_difference,
-            'difference_per_skill': match.absolute_skill_differences_vector.tolist()
-        }
-    }
+    body = teams_creator.MatchCreatorReport(match).create_report()
+
     return flask.jsonify(body)
 
 
