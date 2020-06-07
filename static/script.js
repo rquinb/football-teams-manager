@@ -99,4 +99,3 @@ $.get( `${baseUrl}/players/`, function( data ) {
               </div>
             </div>`
   };
-
