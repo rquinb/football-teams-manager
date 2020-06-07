@@ -28,20 +28,23 @@ function getSkillValuesInForm(){
 }
 
 $("#nuevo-jugador").on("click",function(){
-    var nombre = $("#nombre").val();
-    var skillsObject = getSkillValuesInForm();
-    var skills = [];
-    for(let skill in skillsObject){
-      let skillObject = {'id':getSkillId(skill),'strength':skillsObject[skill]}
-      skills.push(skillObject);
-    }
-    $("#players-container").append(createPlayerCard(nombre ,skillsObject));
+  var nombre = $("#nombre").val();
+  var skillsObject = getSkillValuesInForm();
+  var skills = [];
+  for(let skill in skillsObject){
+    let skillObject = {'id':getSkillId(skill),'strength':skillsObject[skill]};
+    skills.push(skillObject);
+  }
     // Save to DB
     $.ajax({
         type: "POST",
         url: `${baseUrl}/players/`,
         data: JSON.stringify({"name":nombre, "skills":skills}),
-        success: alert("Jugador creado con exito!"),
+        success: function(response){
+          let player_id = response.data['player_id'];
+          $("#players-container").append(createPlayerCard(player_id, nombre ,skillsObject));
+          alert(`Jugador ${player_id} creado con exito!`);
+        },
         contentType: "application/json; charset=utf-8"
       });
 });
@@ -62,19 +65,20 @@ $( ".form-control-range" ).slider();
 
 $.get( `${baseUrl}/players/`, function( data ) {
     let players_data = data.data;
-    let nombre;
+    let nombre, id;
     for(let i=0; i < players_data.length; i++){
         nombre = players_data[i]['name'];
+        id = players_data[i]['player_id'];
         let skillsObject = {};
         for(let j=0; j < players_data[i]['skills'].length; j ++){
             let skill = players_data[i]['skills'][j];
             skillsObject[skill['name']] = skill['strength'];
         }     
-        $("#players-container").append(createPlayerCard(nombre, skillsObject));
+        $("#players-container").append(createPlayerCard(id, nombre, skillsObject));
     }
   });
 
-  function createPlayerCard(nombre, skillsObject){
+  function createPlayerCard(id ,nombre, skillsObject){
     let amount_of_skills = Object.keys(skillsObject).length;
     let total_skills = 0
     let skills_html = ""
@@ -83,7 +87,7 @@ $.get( `${baseUrl}/players/`, function( data ) {
       skills_html += `<label style="text-transform:capitalize;">${skill}: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${skillsObject[skill] / 10 * 100}%" aria-valuenow="${skillsObject[skill]}" aria-valuemin="0" aria-valuemax="10">${skillsObject[skill]}</div></div>`
     }
     let promedio = (total_skills / amount_of_skills).toFixed(1);
-    return `<div class="card player-card">
+    return `<div class="card player-card" id="${id}">
               <div class="card-header bg-success player-name-card">
               ${nombre}
               </div>

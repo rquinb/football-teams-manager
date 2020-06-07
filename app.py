@@ -51,7 +51,7 @@ def add_player():
     player = players_repository.get_player_by_name(player_name)
     for skill in body["skills"]:
         players_repository.add_skill(player['player_id'], skill['id'], skill['strength'])
-    return {}, http.HTTPStatus.CREATED
+    return {'data': {'player_id': player['player_id']}}, http.HTTPStatus.CREATED
 
 
 @app.route("/players/", methods=["GET"])
@@ -71,15 +71,11 @@ def get_player(player_id):
 
 @app.route("/match")
 def get_match():
-    players = players_repository.get_players()
-    if flask.request.args:
-        player_types = int(flask.request.args.get('player_types'))
-        match_creator = teams_creator.MatchCreator(players, player_types=player_types)
-    else:
-        match_creator = teams_creator.MatchCreator(players)
+    players_for_match = flask.request.args.getlist('player')
+    players = [players_repository.get_player_by_id(player_id) for player_id in players_for_match]
+    match_creator = teams_creator.MatchCreator(players)
     match = match_creator.create_balanced_match(iterations=1000)
     body = teams_creator.MatchCreatorReport(match).create_report()
-
     return flask.jsonify(body)
 
 
