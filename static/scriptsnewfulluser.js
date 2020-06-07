@@ -1,4 +1,7 @@
+let urlBase= "http://localhost:5000"
+
 function validar(){
+    let validado= true
     let nuevoUsuario= document.getElementById("nuevoUsuario").value;
     let contraseña= document.getElementById("contraseña").value;
     let correo= document.getElementById("correo").value;
@@ -7,20 +10,25 @@ function validar(){
 
     if (nuevoUsuario===""){
         alert("El nombre de usuario está vacío");
-        return false
-    } else if (nuevoUsuario.length<5 && nuevoUsuario.length>15){
-        alert("El nombre de usuario debe tener entre 5 y 15 caracteres")
-        return false
-    } else if (contraseña===""){
-        alert("La contraseña está vacía");
-        return false
-    } else if (correo===""){
-        alert("Debe introducir un correo electrónico");
-        return false
-    } else if (!expresion.test(correo)){
-        alert("Correo incorrecto");
-        return false
+        validado= false
     }
+    if (!(nuevoUsuario.length>5 && nuevoUsuario.length<15)){
+        alert("El nombre de usuario debe tener entre 5 y 15 caracteres")
+        validado= false
+    }
+    if (contraseña===""){
+        alert("La contraseña está vacía");
+        validado= false
+    }
+    if (correo===""){
+        alert("Debe introducir un correo electrónico");
+        validado= false
+    }
+    if (!expresion.test(correo)){
+        alert("Correo incorrecto");
+        validado= false
+    }
+    return validado
 }
 
 function guardarDatos(){
@@ -42,6 +50,12 @@ let datosusu=localStorage.getItem("datosusuarios");
         datosusu["datos"].push({"nuevoUsuario": nuevoUsuario, "contraseña": contraseña, "correo": correo});
         localStorage.setItem("datosusuarios", JSON.stringify(datosusu));
         alert("Nuevo usuario ingresado");
-        window.location.href="https://www.youtube.com/watch?v=DExBeFCx3mQ"
+    }
+}
+
+function registrarJugador(){
+    if (validar()==true){
+        guardarDatos()
+        window.location.href= urlBase
     }
 }
