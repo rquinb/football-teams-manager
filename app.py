@@ -72,8 +72,9 @@ def get_player(player_id):
 @app.route("/match")
 def get_match():
     players_for_match = flask.request.args.getlist('player')
+    players_per_team = int(flask.request.args.get('players_per_team'))
     players = [players_repository.get_player_by_id(player_id) for player_id in players_for_match]
-    match_creator = teams_creator.MatchCreator(players)
+    match_creator = teams_creator.MatchCreator(players,players_per_team=players_per_team)
     match = match_creator.create_balanced_match(iterations=1000)
     body = teams_creator.MatchCreatorReport(match).create_report()
     return flask.jsonify(body)
