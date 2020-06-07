@@ -7,13 +7,13 @@ class Team:
     def __init__(self, team_df):
         self.players = team_df['name']
         self.average_per_skill = self._get_average_skills_vector(team_df).reset_index(drop=True)
-        self.average_skill = np.mean(self.average_per_skill)
+        self.average_skill = float(np.mean(self.average_per_skill))
         self.players_skills = team_df.drop(['name', 'cluster'], axis=1)
 
     @staticmethod
     def _get_average_skills_vector(team_df):
         skills_df = team_df.drop(['name', 'cluster'], axis=1)
-        return skills_df.mean(axis=1)
+        return skills_df.mean(axis=0)
 
 
 class Match:
@@ -22,10 +22,9 @@ class Match:
         self.team_b = team_b
         self.absolute_skill_differences_vector = self._average_difference(absolute=True)
         self.regular_skill_differences_vector = self._average_difference()
-        self.total_absolute_difference_per_skill = sum(self.absolute_skill_differences_vector.tolist())
-        self.total_regular_difference_per_skill = sum(self.regular_skill_differences_vector.tolist())
-        self.average_difference = np.abs(self.team_a.average_skill - self.team_b.average_skill)
-        self.mean_absolute_difference = self._sum_of_difference_by_player()
+        self.total_absolute_difference_per_skill = float(sum(self.absolute_skill_differences_vector.tolist()))
+        self.total_regular_difference_per_skill = float(sum(self.regular_skill_differences_vector.tolist()))
+        self.mean_absolute_difference = float(np.mean(self.absolute_skill_differences_vector.tolist()))
 
     def _average_difference(self, absolute=True):
         return np.abs(self.team_a.average_per_skill - self.team_b.average_per_skill) if absolute else self.team_a.average_per_skill - self.team_b.average_per_skill
@@ -35,7 +34,8 @@ class Match:
 
 
 class MatchCreator:
-    def __init__(self, available_players, players_per_team=5):
+    def __init__(self, available_players, players_per_team=5, player_types=1):
+        self.player_types = player_types
         self.players_table = self._create_players_table(available_players)
         self.players_per_team = players_per_team
 
@@ -49,11 +49,9 @@ class MatchCreator:
                 min_match = match
             else:
                 if balance_each_skill:
-                    new_match_better_than_current_min = match.mean_absolute_difference < \
-                                                        min_match.mean_absolute_difference
+                    new_match_better_than_current_min = match.mean_absolute_difference < min_match.mean_absolute_difference
                 else:
-                    new_match_better_than_current_min = match.total_regular_difference_per_skill < \
-                                                        min_match.total_regular_difference_per_skill
+                    new_match_better_than_current_min = match.total_regular_difference_per_skill < min_match.total_regular_difference_per_skill
                 if new_match_better_than_current_min:
                     min_match = match
         return min_match
@@ -77,8 +75,7 @@ class MatchCreator:
             merged_df = pd.concat([merged_df, not_chosen_yet.sample(n=players_to_complete, replace=False)])
         return merged_df
 
-    @staticmethod
-    def _create_players_table(players):
+    def _create_players_table(self, players):
         players_list = []
         for player in players:
             player_dict = {}
@@ -88,6 +85,6 @@ class MatchCreator:
             players_list.append(player_dict)
         players_table = pd.DataFrame(players_list)
         only_skills = players_table.drop('name', axis=1)
-        clustered_players = KMeans(n_clusters=5).fit(only_skills)
+        clustered_players = KMeans(n_clusters=self.player_types).fit(only_skills)
         players_table['cluster'] = clustered_players.labels_
         return players_table

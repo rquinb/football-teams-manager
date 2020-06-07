@@ -2,8 +2,10 @@ import os
 import http
 import logging
 import flask
-import entities
 import sqlite3
+import entities
+import teams_creator
+
 
 db = sqlite3.connect(os.path.join(os.getcwd(), "db.sqlite3"),check_same_thread=False,isolation_level=None)
 db.row_factory = sqlite3.Row
@@ -48,7 +50,7 @@ def add_player():
         logging.info(f'Player {player_name} already added to database')
     player = players_repository.get_player_by_name(player_name)
     for skill in body["skills"]:
-        players_repository.add_skill(player['player_id'],skill['id'], skill['strength'])
+        players_repository.add_skill(player['player_id'], skill['id'], skill['strength'])
     return {}, http.HTTPStatus.CREATED
 
 
@@ -65,6 +67,31 @@ def get_player(player_id):
         return flask.jsonify({"data": player})
     else:
         raise http.HTTPStatus.NOT_FOUND
+
+
+@app.route("/match")
+def get_match():
+    players = players_repository.get_players()
+    if flask.request.args:
+        player_types = int(flask.request.args.get('player_types'))
+        match_creator = teams_creator.MatchCreator(players, player_types=player_types)
+    else:
+        match_creator = teams_creator.MatchCreator(players)
+    match = match_creator.create_balanced_match(iterations=1000)
+    body = {
+        'teams': {
+            'team_1': {'players': match.team_a.players.tolist(),
+                       'skills': match.team_a.average_per_skill.tolist(),
+                       'average_skill': match.team_a.average_skill},
+            'team_2': {'players': match.team_b.players.tolist(),
+                       'skills': match.team_b.average_per_skill.tolist(),
+                       'average_skill': match.team_b.average_skill}},
+        'skill_differences': {
+            'average_difference': match.mean_absolute_difference,
+            'difference_per_skill': match.absolute_skill_differences_vector.tolist()
+        }
+    }
+    return flask.jsonify(body)
 
 
 if __name__ == '__main__':
