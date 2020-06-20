@@ -6,7 +6,18 @@
 .player-card{
     width: 80%;
 }
+
+.selected-player-card{
+    border: solid;
+    border-width: thick;
+}
+
 .wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+}
+.wrapper-available-players {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
@@ -43,5 +54,9 @@
     padding: 0;
     text-align: center;
     text-decoration:none;
-} 
+}
+
+.selected-player{
+    border-width: thick;;
+}
 

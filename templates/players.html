@@ -12,6 +12,7 @@
                     <div class="nav flex-column nav-pills players-admin-options" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <button type="button" class="btn btn-secondary btn-lg btn-block button-add-new-player" data-toggle="modal" data-target="#create-player-form">Crear Jugador</button>
                         <a class="text-center nav-link active" id="v-pills-display-players-tab" data-toggle="pill" href="#v-pills-display-players" role="tab" aria-controls="v-pills-display-players" aria-selected="true">Ver jugadores</a>
+                        <a class="text-center nav-link" id="v-pills-generate-teams-tab" data-toggle="pill" href="#v-pills-generate-teams" role="tab" aria-controls="v-pills-generate-teams" aria-selected="false">Generar Equipos</a>
                     </div>
                 </div>
                 <div class="col-md-10">                        
@@ -78,6 +79,41 @@
                         </div>
                         <div class="tab-pane fade show active" id="v-pills-display-players" role="tabpanel" aria-labelledby="v-pills-display-players-tab">
                             <div class="wrapper" id="players-container">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active" id="v-pills-generate-teams" role="tabpanel" aria-labelledby="v-pills-generate-teams-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mx-auto text-center">
+                                        <div class="card-header">Configurar partido</div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="tipo-futbol">Tipo de Partido</label>            
+                                                <select name="tipo" id="tipo-futbol">
+                                                    <option value="5">Futbol 5</option>
+                                                    <option value="7">Futbol 7</option>
+                                                    <option value="11">Futbol 11</option>
+                                                </select>
+                                            </div>
+                                            <button id="button-generate-teams" class="btn btn-success">Generar Equipos</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mx-auto text-center">
+                                        <div class="card-header">Jugadores disponibles</div>
+                                        <div class="card-body">
+                                            <div class="wrapper-available-players" id="available-players-container"></div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <pre class="prettyprint" id="generated-match"></pre>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

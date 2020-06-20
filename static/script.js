@@ -49,6 +49,21 @@ $("#nuevo-jugador").on("click",function(){
       });
 });
 
+$("#button-generate-teams").on("click",function(){
+  let baseMatchUrl = `${baseUrl}/match?`
+  let playersPerTeam = `players_per_team=${$("#tipo-futbol").val()}`;
+  let playersForMatch = "";
+  let playerCards = $(".selected-player-card");
+  for(let playerCard of playerCards){
+    let playerId = $(playerCard).attr('id').split('-')[1];
+    playersForMatch += `&player=${playerId}`;
+  }
+  let fullMatchUrl = baseMatchUrl + playersPerTeam + playersForMatch;
+  $.get(fullMatchUrl, function( data ) {
+    $("#generated-match").text(JSON.stringify(data, null, "\t"));
+  });
+});
+
 $(".players-data-numeric-input").slider({
   min: 1,
   max: 10,
@@ -61,6 +76,16 @@ $(".players-data-numeric-input").slider({
 });
 
 $( ".form-control-range" ).slider();
+
+$(document).on("click",".player-card",function(){
+  $(this).toggleClass("selected-player-card");
+  let listOfPlayers = "";
+  let playerCards = $(".selected-player-card");
+  for(let playerCard of playerCards){
+    listOfPlayers += `<div class="card">${$(playerCard).find('.player-name-card').text()}</div>`
+  }
+  $("#available-players-container").html(listOfPlayers);
+});
 
 
 $.get( `${baseUrl}/players/`, function( data ) {
@@ -87,7 +112,7 @@ $.get( `${baseUrl}/players/`, function( data ) {
       skills_html += `<label style="text-transform:capitalize;">${skill}: </label><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: ${skillsObject[skill] / 10 * 100}%" aria-valuenow="${skillsObject[skill]}" aria-valuemin="0" aria-valuemax="10">${skillsObject[skill]}</div></div>`
     }
     let promedio = (total_skills / amount_of_skills).toFixed(1);
-    return `<div class="card player-card" id="${id}">
+    return `<div class="card player-card" id="player-${id}">
               <div class="card-header bg-success player-name-card">
               ${nombre}
               </div>
