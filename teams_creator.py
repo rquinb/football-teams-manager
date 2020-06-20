@@ -102,13 +102,13 @@ class MatchCreatorReport:
                                      'value': skill})
         return final_skill_list
 
-    def create_report(self):
+    def create_report(self, players_repository):
         return {
             'teams': {
-                'team_1': {'players': self.match.team_a.players.tolist(),
+                'team_1': {'players': [players_repository.get_player_by_name(player) for player in self.match.team_a.players.tolist()],
                            'skills': self._skill_list_to_dictionary(self.match.team_a.average_per_skill.tolist()),
                            'average_skill': self.match.team_a.average_skill},
-                'team_2': {'players': self.match.team_b.players.tolist(),
+                'team_2': {'players': [players_repository.get_player_by_name(player) for player in self.match.team_b.players.tolist()],
                            'skills': self._skill_list_to_dictionary(self.match.team_b.average_per_skill.tolist()),
                            'average_skill': self.match.team_b.average_skill}
             },
