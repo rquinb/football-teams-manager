@@ -50,8 +50,9 @@ $("#nuevo-jugador").on("click",function(){
 });
 
 $("#button-generate-teams").on("click",function(){
-  let baseMatchUrl = `${baseUrl}/match?`
-  let playersPerTeam = `players_per_team=${$("#tipo-futbol").val()}`;
+  let baseMatchUrl = `${baseUrl}/match?`;
+  let numberOfPlayers = $("#tipo-futbol").val();
+  let playersPerTeam = `players_per_team=${numberOfPlayers}`;
   let playersForMatch = "";
   let playerCards = $(".selected-player-card");
   for(let playerCard of playerCards){
@@ -60,7 +61,37 @@ $("#button-generate-teams").on("click",function(){
   }
   let fullMatchUrl = baseMatchUrl + playersPerTeam + playersForMatch;
   $.get(fullMatchUrl, function( data ) {
-    $("#generated-match").text(JSON.stringify(data, null, "\t"));
+    let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M'];
+    let teamsNames = Object.keys(data['teams']);
+    console.log(teamsNames);
+    for(let i=0;i<teamsNames.length;i++){
+      let playersPositions = [];
+      for(let j=0;j<parseInt(numberOfPlayers);j++){
+        let playerObject = {};
+        playerObject['name'] = data['teams'][teamsNames[i]]['players'][j]['name'];
+        playerObject['position'] = positions[j];
+        playersPositions.push(playerObject);
+      }
+      $(`.team${i+1}`).soccerfield(playersPositions,{
+          field: {
+            width: "500px",
+            height: "400px",
+            img: '../static/Soccer-Field-Players-Positions/src/img/soccerfield_green.png',
+            startHidden: false,
+            animate: false,
+            fadeTime: 1000,
+            autoReveal:true
+          },
+          players: {
+              font_size: 10,
+              reveal: true,
+              sim: true,
+              timeout: 1000,
+              fadeTime: 1000,
+              img: false
+          }
+      });
+    }
   });
 });
 
