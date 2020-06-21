@@ -50,6 +50,9 @@ $("#nuevo-jugador").on("click",function(){
 });
 
 $("#button-generate-teams").on("click",function(){
+  $(".team1").html('<span id="loading-message">Generando equipos...</span>');
+  $(".team2").empty();
+
   let baseMatchUrl = `${baseUrl}/match?`;
   let numberOfPlayers = $("#tipo-futbol").val();
   let playersPerTeam = `players_per_team=${numberOfPlayers}`;
@@ -92,6 +95,7 @@ $("#button-generate-teams").on("click",function(){
           }
       });
     }
+    $(".team1").find("#loading-message").remove();
   });
 });
 
