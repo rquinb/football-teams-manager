@@ -29,11 +29,6 @@ def players_page():
     return flask.render_template("players.html")
 
 
-@app.route("/creador-de-equipos/")
-def teams_creator_page():
-    return flask.render_template("teams_creator.html")
-
-
 @app.route("/skills/", methods=['GET'])
 def get_all_skills():
     skills = skills_repository.get_all_skills()
