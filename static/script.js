@@ -51,8 +51,13 @@ $("#nuevo-jugador").on("click",function(){
 
 $("#button-generate-teams").on("click",function(){
   $(".team1").html('<span id="loading-message">Generando equipos...</span>');
+  $(".team1-data").empty();
+  $("#team1-title").empty();
   $(".team2").empty();
-
+  $(".team2-data").empty();
+  $("#team2-title").empty();
+  $("#total-skills-diff").empty();
+  $("#total-skills-difference-container").empty();
   let baseMatchUrl = `${baseUrl}/match?`;
   let numberOfPlayers = $("#tipo-futbol").val();
   let playersPerTeam = `players_per_team=${numberOfPlayers}`;
@@ -66,7 +71,8 @@ $("#button-generate-teams").on("click",function(){
   $.get(fullMatchUrl, function( data ) {
     let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M'];
     let teamsNames = Object.keys(data['teams']);
-    console.log(teamsNames);
+    $('#total-skills-diff').html(`<div class="card"><div class="card-header">Total Skills Difference</div><div class="card-body text-center"><h2>${data['skill_differences']['average_difference'].toFixed(2)}</h2></div></div>`);
+    $('#total-skills-difference-container').html(renderTotalSkillsDifferenceInformation(data['skill_differences']['difference_per_skill']));
     for(let i=0;i<teamsNames.length;i++){
       let playersPositions = [];
       for(let j=0;j<parseInt(numberOfPlayers);j++){
@@ -75,6 +81,7 @@ $("#button-generate-teams").on("click",function(){
         playerObject['position'] = positions[j];
         playersPositions.push(playerObject);
       }
+      $(`#team${i+1}-title`).html(`<h1>Team ${i+1}</h1>`)
       $(`.team${i+1}`).soccerfield(playersPositions,{
           field: {
             width: "500px",
@@ -94,10 +101,30 @@ $("#button-generate-teams").on("click",function(){
               img: false
           }
       });
+      $(`.team${i+1}-data`).html(renderTeamAverageSkills(data['teams'][`team_${i+1}`]['skills']));
     }
     $(".team1").find("#loading-message").remove();
+
   });
 });
+
+function renderTotalSkillsDifferenceInformation(differencePerSkillArray){
+  let html = '<div class="card"><div class="card-header">Differences Per Skill</div><div class="card-body wrapper-skills-differences">';
+  for(let skill of differencePerSkillArray){
+    html += `<div class="card"><div class="card-header">${skill['name'].toUpperCase()}</div><div class="card-body">${skill['value'].toFixed(2)}</div></div>`;
+  }
+  html += "</div></div>"
+  return html;
+}
+
+function renderTeamAverageSkills(teamSkillsArray){
+  let html = '<table class="table"><tr><th>Skill</th><th>Average</th></tr>'
+  for(let skill of teamSkillsArray){
+    html += `<tr><td>${skill['name'].toUpperCase()}</td><td>${skill['value'].toFixed(2)}</td></tr>`
+  }
+  html += "</table>"
+  return html;
+}
 
 $(".players-data-numeric-input").slider({
   min: 1,
@@ -117,7 +144,7 @@ $(document).on("click",".player-card",function(){
   let listOfPlayers = "";
   let playerCards = $(".selected-player-card");
   for(let playerCard of playerCards){
-    listOfPlayers += `<div class="card">${$(playerCard).find('.player-name-card').text()}</div>`
+    listOfPlayers += `<div class="card player-for-match">${$(playerCard).find('.player-name-card').text()}</div>`
   }
   $("#available-players-container").html(listOfPlayers);
 });

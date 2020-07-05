@@ -22,6 +22,11 @@
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
 }
+.wrapper-skills-differences{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+}
 .average-skill{
     font-weight: bold;
     font-size: xx-large;
@@ -60,3 +65,22 @@
     border-width: thick;;
 }
 
+.player-for-match{
+    background-color: #28a745;
+    font-weight: bold;
+}
+
+.configure-match-header{
+    background-color: #424344;
+    color: white;
+    font-size: medium;
+}
+
+.configure-match-card{
+    border-width: thick;
+    border-block-color: gray;
+}
+
+.row{
+    margin-bottom: 10px;
+}

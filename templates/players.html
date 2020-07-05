@@ -86,8 +86,8 @@
                         <div class="tab-pane fade" id="v-pills-generate-teams" role="tabpanel" aria-labelledby="v-pills-generate-teams-tab" aria-hidden="true">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="card mx-auto text-center">
-                                        <div class="card-header">Configurar partido</div>
+                                    <div class="card mx-auto text-center configure-match-card">
+                                        <div class="card-header configure-match-header">Configurar partido</div>
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="tipo-futbol">Tipo de Partido</label>            
@@ -102,21 +102,34 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="card mx-auto text-center">
-                                        <div class="card-header">Jugadores disponibles</div>
+                                    <div class="card mx-auto text-center configure-match-card">
+                                        <div class="card-header configure-match-header">Jugadores disponibles</div>
                                         <div class="card-body">
                                             <div class="wrapper-available-players" id="available-players-container"></div>
                                         </div>
                                     </div>    
                                 </div>
                             </div>
+                            <div class="row d-flex justify-content-center">
+                                <div id="total-skills-diff"></div>                            
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div id="total-skills-difference-container"></div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
+                                    <div id="team1-title"></div>
                                     <div class="team1"></div>
+                                    <div class="team1-data"></div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div id="team2-title"></div>
                                     <div class="team2"></div>
+                                    <div class="team2-data"></div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div id="match-data"></div>                                
                             </div>
                         </div>
                     </div>
