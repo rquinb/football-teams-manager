@@ -71,7 +71,7 @@ $("#button-generate-teams").on("click",function(){
   $.get(fullMatchUrl, function( data ) {
     let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M'];
     let teamsNames = Object.keys(data['teams']);
-    $('#total-skills-diff').html(`<div class="card"><div class="card-header">Total Skills Difference</div><div class="card-body text-center"><h2>${data['skill_differences']['average_difference'].toFixed(2)}</h2></div></div>`);
+    $('#total-skills-diff').html(`<div class="card border-dark mb-3"><div class="card-header skills-header">Total Skills Difference</div><div class="card-body text-center"><h2>${data['skill_differences']['average_difference'].toFixed(2)}</h2></div></div>`);
     $('#total-skills-difference-container').html(renderTotalSkillsDifferenceInformation(data['skill_differences']['difference_per_skill']));
     for(let i=0;i<teamsNames.length;i++){
       let playersPositions = [];
@@ -109,20 +109,20 @@ $("#button-generate-teams").on("click",function(){
 });
 
 function renderTotalSkillsDifferenceInformation(differencePerSkillArray){
-  let html = '<div class="card"><div class="card-header">Differences Per Skill</div><div class="card-body wrapper-skills-differences">';
+  let html = '<div class="card border-dark mb-3"><div class="card-header skills-header">Differences Per Skill</div><div class="card-body wrapper-skills-differences">';
   for(let skill of differencePerSkillArray){
-    html += `<div class="card"><div class="card-header">${skill['name'].toUpperCase()}</div><div class="card-body">${skill['value'].toFixed(2)}</div></div>`;
+    html += `<div class="card border-dark mb-3"><div class="card-header skills-header">${skill['name'].toUpperCase()}</div><div class="card-body text-center">${skill['value'].toFixed(2)}</div></div>`;
   }
   html += "</div></div>"
   return html;
 }
 
 function renderTeamAverageSkills(teamSkillsArray){
-  let html = '<table class="table"><tr><th>Skill</th><th>Average</th></tr>'
+  let html = '<table class="table"><thead class="thead-dark"><tr><th>Skill</th><th>Average</th></tr></thead><tbody>'
   for(let skill of teamSkillsArray){
     html += `<tr><td>${skill['name'].toUpperCase()}</td><td>${skill['value'].toFixed(2)}</td></tr>`
   }
-  html += "</table>"
+  html += "</tbody></table>"
   return html;
 }
 

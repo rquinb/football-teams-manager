@@ -35,6 +35,11 @@
 .card-header{
     text-align: center;
 }
+.skills-header{
+    background-color: #68696b;
+    color: white;
+    font-size: medium;
+}
 .player-name-card{
     font-weight: bold;
     font-size: 30px;
