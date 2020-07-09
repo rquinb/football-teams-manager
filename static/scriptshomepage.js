@@ -8,9 +8,8 @@ function ingresar(){
                     window.location.href="http://localhost:5000/administrador-de-jugadores"
                 } else {
                     alert("Contraseña incorrecta");
-                    return;//sino sde la comparación de las contraseñas
+                    return;
                 }
              }
-        }
-        alert("Usuario no existente");
-    }
+        }        alert("Usuario no existente");
+}
