@@ -10,8 +10,7 @@ function ingresar(){
                     alert("Contraseña incorrecta");
                     return;
                 }
-             } else {
-                    alert("Usuario no existente");
-                }
-             }
-        }        
+            }
+        } alert("Usuario incorrecto");
+          return
+    }        
