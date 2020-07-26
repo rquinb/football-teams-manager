@@ -9,8 +9,9 @@ function ingresar(){
                     return;//sino sde la comparación de las contraseñas
                 } else {
                     alert("Contraseña incorrecta");
+                    return;
                 }
-             }
-        }
-        alert("Usuario no existente");
-    }
+            }
+        } alert("Usuario incorrecto");
+          return
+    }        
