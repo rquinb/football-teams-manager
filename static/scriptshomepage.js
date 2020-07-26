@@ -6,9 +6,9 @@ function ingresar(){
         if(usuario==datosUsuario[i]["nuevoUsuario"]){
             if(contraseña==datosUsuario[i]["contraseña"]){
                     window.location.href="http://localhost:5000/administrador-de-jugadores"
+                    return;//sino sde la comparación de las contraseñas
                 } else {
                     alert("Contraseña incorrecta");
-                    return;//sino sde la comparación de las contraseñas
                 }
              }
         }

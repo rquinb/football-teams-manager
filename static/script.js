@@ -69,7 +69,7 @@ $("#button-generate-teams").on("click",function(){
   }
   let fullMatchUrl = baseMatchUrl + playersPerTeam + playersForMatch;
   $.get(fullMatchUrl, function( data ) {
-    let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M'];
+    let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M', 'RC_F','LC_F','C_F'];
     let teamsNames = Object.keys(data['teams']);
     $('#total-skills-diff').html(`<div class="card border-dark mb-3"><div class="card-header skills-header">Total Skills Difference</div><div class="card-body text-center"><h2>${data['skill_differences']['average_difference'].toFixed(2)}</h2></div></div>`);
     $('#total-skills-difference-container').html(renderTotalSkillsDifferenceInformation(data['skill_differences']['difference_per_skill']));

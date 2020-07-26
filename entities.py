@@ -72,7 +72,13 @@ class PlayersRepository(BaseRepository):
             INSERT INTO players(name) VALUES (?);
             """, [name])
 
-    def modify_name(self,player_id, new_name):
+    def delete_player(self, id):
+        with closing(self._db.cursor()) as cursor:
+            cursor.execute("""
+            DELETE FROM players WHERE id=?;
+            """, [id])
+
+    def modify_name(self, player_id, new_name):
         with closing(self._db.cursor()) as cursor:
             cursor.execute("""
             UPDATE players SET name=? WHERE id=?; 
