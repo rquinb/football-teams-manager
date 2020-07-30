@@ -187,6 +187,9 @@ $.get( `${baseUrl}/players/`, function( data ) {
                 <div class="card-body">
                   ${skills_html}
                 </div>
+                <div class="card-footer">
+                  <button type="button" class="btn btn-secondary button-edit-player"><i class="fa fa-pencil-square-o"></i></button>
+                </div>
               </div>
             </div>`
   };
