@@ -68,9 +68,13 @@ def get_player(player_id):
 def get_match():
     players_for_match = flask.request.args.getlist('player')
     players_per_team = int(flask.request.args.get('players_per_team'))
+    balance_each_skill = bool(flask.request.args.get('balance_each_skill'))
+    compensate_differences = bool(flask.request.args.get('compensate_differences'))
     players = [players_repository.get_player_by_id(player_id) for player_id in players_for_match]
-    match_creator = teams_creator.MatchCreator(players,players_per_team=players_per_team)
-    match = match_creator.create_balanced_match(iterations=1000)
+    match_creator = teams_creator.MatchCreator(players, players_per_team=players_per_team)
+    match = match_creator.create_balanced_match(iterations=1000,
+                                                balance_each_skill=balance_each_skill,
+                                                compensate_differences=compensate_differences)
     body = teams_creator.MatchCreatorReport(match).create_report(players_repository)
     return flask.jsonify(body)
 

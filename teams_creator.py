@@ -23,8 +23,9 @@ class Match:
         self.absolute_skill_differences_vector = self._average_difference(absolute=True)
         self.regular_skill_differences_vector = self._average_difference()
         self.total_absolute_difference_per_skill = float(sum(self.absolute_skill_differences_vector.tolist()))
-        self.total_regular_difference_per_skill = float(sum(self.regular_skill_differences_vector.tolist()))
+        self.total_regular_difference_per_skill = abs(float(sum(self.regular_skill_differences_vector.tolist())))
         self.mean_absolute_difference = float(np.mean(self.absolute_skill_differences_vector.tolist()))
+        self.mean_regular_difference = abs(float(np.mean(self.regular_skill_differences_vector.tolist())))
 
     def _average_difference(self, absolute=True):
         return np.abs(self.team_a.average_per_skill - self.team_b.average_per_skill) if absolute else self.team_a.average_per_skill - self.team_b.average_per_skill
@@ -39,7 +40,7 @@ class MatchCreator:
         self.players_table = self._create_players_table(available_players)
         self.players_per_team = players_per_team
 
-    def create_balanced_match(self, iterations=1000, balance_each_skill=True):
+    def create_balanced_match(self, iterations=2000, balance_each_skill=False, compensate_differences=False):
         min_match = None
         for i in range(iterations):
             team_1_df = self._sample_players(self.players_table)
@@ -48,8 +49,12 @@ class MatchCreator:
             if min_match is None:
                 min_match = match
             else:
-                if balance_each_skill:
+                if balance_each_skill and not compensate_differences:
                     new_match_better_than_current_min = match.mean_absolute_difference < min_match.mean_absolute_difference
+                elif balance_each_skill and compensate_differences:
+                    new_match_better_than_current_min = match.mean_regular_difference < min_match.mean_regular_difference
+                elif not balance_each_skill and not compensate_differences:
+                    new_match_better_than_current_min = match.total_absolute_difference_per_skill < min_match.total_absolute_difference_per_skill
                 else:
                     new_match_better_than_current_min = match.total_regular_difference_per_skill < min_match.total_regular_difference_per_skill
                 if new_match_better_than_current_min:

@@ -89,14 +89,24 @@
                                     <div class="card mx-auto text-center configure-match-card">
                                         <div class="card-header configure-match-header">Configurar partido</div>
                                         <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="tipo-futbol">Tipo de Partido</label>            
-                                                <select name="tipo" id="tipo-futbol">
-                                                    <option value="5">Futbol 5</option>
-                                                    <option value="7">Futbol 7</option>
-                                                    <option value="10">Futbol 10</option>
-                                                    <option value="11">Futbol 11</option>
-                                                </select>
+                                            <div class="form-group team-configuration-form">
+                                                <div class="team-configuration-option">
+                                                    <label for="tipo-futbol">Tipo de Partido</label>            
+                                                    <select name="tipo" id="tipo-futbol">
+                                                        <option value="5">Futbol 5</option>
+                                                        <option value="7">Futbol 7</option>
+                                                        <option value="10">Futbol 10</option>
+                                                        <option value="11">Futbol 11</option>
+                                                    </select>
+                                                </div>
+                                                <div class="team-configuration-option">
+                                                    <label for="tipo-futbol" title="Desea que no se agrupen demasiados jugadores con las mismas fortalezas/debilidades en un mismo equipo">Balancear skills intraequipo</label>            
+                                                    <input type="checkbox" id="balance-each-skill">
+                                                </div>
+                                                <div class="team-configuration-option">
+                                                    <label for="tipo-futbol" title="Desea que exista la posibilidad de variaciones mas pronunciadas de skills entre equipos que se compensan con otras skills">Compensar diferencias</label>            
+                                                    <input type="checkbox" id="compensate-differences">
+                                                </div>
                                             </div>
                                             <button id="button-generate-teams" class="btn btn-success">Generar Equipos</button>
                                         </div>

@@ -67,7 +67,9 @@ $("#button-generate-teams").on("click",function(){
     let playerId = $(playerCard).attr('id').split('-')[1];
     playersForMatch += `&player=${playerId}`;
   }
-  let fullMatchUrl = baseMatchUrl + playersPerTeam + playersForMatch;
+  let balanceEachSkill = `&balance_each_skill=${$('#balance-each-skill').is(':checked')}`
+  let compensateDifferences = `&compensate_differences=${$('#compensate-differences').is(':checked')}`
+  let fullMatchUrl = baseMatchUrl + playersPerTeam + playersForMatch + balanceEachSkill + compensateDifferences;
   $.get(fullMatchUrl, function( data ) {
     let positions = ['C_GK', 'LC_B', 'C_B', 'RC_B','C_DM', 'LC_M', 'RC_M', 'RC_F','LC_F','C_F'];
     let teamsNames = Object.keys(data['teams']);
